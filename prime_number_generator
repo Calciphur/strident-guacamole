@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+/*  This program will receive input from a user
+    in the form of an integer, n. The program will
+    return the first 'n' prime integers.
+*/
+void prime_numbers(int);    //Function prototype. Unnecessary, but worth including for practice.
+int main()
+{
+    int n;
+    cout << "This program will return the first n integers.\nWhat is the value of 'n'? ";
+    cin >> n;
+    prime_numbers(n);
+}
+void prime_numbers(int amount)  //I didn't have to write this as a separate function, but compartmentalization is good practice.
+{
+    int counter=0;  //a counter to let the function know when to break.
+    for (int i=2; counter<amount; ++i)
+    {
+        if(i == 2)  //I could have handled the number '2' many ways, but this was what I thought of first.
+        {
+            cout << i << " ";
+            counter += 1;
+        }
+        for(int j=2; j<i; j++)
+        {
+            if(i%j==0)
+            {
+                break;
+            }
+            else if((j==(i-1)) && (i%j!=0))     //This seems clunky, probably inefficient.
+            {
+                cout << i << " ";
+                counter += 1;
+            }
+        }
+    }
+}
