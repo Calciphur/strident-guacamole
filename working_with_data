@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+    /* This program will accept numbers from the user, and will then
+    return the mean, max, min, and range of that group of data.
+
+    I am purposefully not using arrays to solve this problem.*/
+int main()
+{
+    int dataSize, num, sumOfNums=0;
+    double minValue, maxValue, mean, range;
+    bool validEntry = true;
+
+    do
+    {
+        cout << "How many numbers will be in this data set? ";
+        cin >> dataSize;
+
+        if(dataSize < 2)
+        {
+            validEntry = false;
+            cout << "The data set must contain at least 2 numbers.\n";
+        }
+
+    }
+    while (validEntry == false);
+
+    cout << "Please enter the numbers in the set:\n";
+    cin >> num;
+    sumOfNums += num;
+    minValue=num;
+    maxValue=num;
+
+    for(int i=2;i<=dataSize;i++)
+    {
+        cin >> num;
+        sumOfNums += num;
+        if(num < minValue)
+        {
+            minValue = num;
+        }
+        else if (num > maxValue)
+        {
+            maxValue = num;
+        }
+    }
+    mean = sumOfNums / dataSize;
+    range = maxValue - minValue;
+
+    cout << "The mean of the dataset is: " <<mean
+         << "\nThe range of the dataset is: " <<range;
+}
