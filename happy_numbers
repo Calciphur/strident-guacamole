@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+#include <sstream>
+using namespace std;
+
+/*  The task: A happy number is defined by the following process.
+    Starting with any positive integer, replace the number by the
+    sum of the squares of its digits, and repeat the process
+    until the number equals 1 (where it will stay), or it loops
+    endlessly in a cycle which does not include 1. Those numbers
+    for which this process ends in 1 are happy numbers, while
+    those that do not end in 1 are unhappy numbers.
+    https://github.com/karan/Projects-Solutions         */
+
+int printFirstHappyNums(int num);
+int main()
+{
+    int player_num, option, happy_count;
+    cout << "Please enter a number between 1 and 10000: ";
+    cin >> player_num;
+    if(player_num >= 1 && player_num <=10000)
+    {
+    int num_array[] = {player_num/10000%10, player_num/1000%10, player_num/100%10, player_num/10%10, player_num%10};
+    int ph_array[5] = {};
+    int running_total=0;
+
+    for(int i=0; i<=4; i++)
+    {
+        ph_array[i] = num_array[i] * num_array[i];
+        running_total += ph_array[i];
+    }
+
+    if(running_total == player_num)
+    {
+        cout << "This is not a happy number. Process returned initial value of " <<player_num <<".";
+        return 0;
+    }
+    else if(running_total == 1)
+    {
+        cout << "Congratulations!!! You found a happy number!";
+        return 0;
+    }
+
+
+    int counter = 0;
+    while((running_total != player_num && running_total != 1) && counter <= 20)
+    {
+        ++counter;
+        int current_array[] = {running_total/10000%10, running_total/1000%10, running_total/100%10, running_total/10%10, running_total%10};
+        running_total = 0;
+        for(int i=0; i<=4; i++)
+        {
+            ph_array[i] = current_array[i] * current_array[i];
+            running_total += ph_array[i];
+        }
+
+        if(running_total == player_num)
+        {
+            cout << "\nThis is not a happy number. Process returned initial value of " <<player_num <<".\n";
+            return 0;
+        }
+        else if(running_total == 1)
+        {
+            cout << "\nCongratulations!!! You found a happy number!\n";
+            return 0;
+        }
+    }
+    cout << "\nThis is not a happy number. Process loops indefinitely.\n";
+    }
+    else
+        cout << "\nYou didn't follow the directions. The number must be between 1 and 10000.\n";
+}
