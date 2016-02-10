@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+class Shape {
+    public:
+        void obj_type(){
+            cout << "This is an inherited function. It is still visible in objects of type 'Sphere'" <<endl;
+        }
+        double volume(double length, double width, double depth){
+            return (length * width * depth);
+        }
+        double area(double length, double width){
+            return (length * width);
+        }
+        Shape(double len, double wid, double dep)       {
+            length = len;
+            width = wid;
+            depth = dep;
+        }
+        Shape(){
+            length = 0;
+            width = 0;
+            depth = 0;
+        }
+    private:
+        double length;
+        double width;
+        double depth;
+};
+
+class Sphere: public Shape{
+    public:
+        double area(double radius){
+            return (4 * pi * radius * radius);
+        }
+        double volume(double radius) {
+            return (4 / 3 * pi * radius * radius * radius);
+        }
+        Sphere(double rad){
+            radius = rad;
+        }
+        Sphere(){
+            radius = 0;
+        }
+    private:
+        double radius;
+        double pi = 3.14159;
+};
+
+int main(){
+    double len, wid, dep, rad;
+
+    cout << "Please enter a length: ";
+    cin >> len;
+
+    cout << "Please enter a width: ";
+    cin >> wid;
+
+    cout << "Please enter a depth/height: ";
+    cin >> dep;
+
+    Shape obj1(len, wid, dep);
+
+    cout << "Please enter a value for the radius of your sphere: ";
+    cin >> rad;
+
+    Sphere obj2(rad);
+
+    obj1.obj_type();
+    obj2.obj_type();    //This statement proves that the function was inherited by the class 'Sphere'.
+
+    cout << "The sphere has a volume of " <<obj2.volume(rad) <<" and a surface area of " <<obj2.area(rad) <<"." <<endl;
+}
