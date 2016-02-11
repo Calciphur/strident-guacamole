@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Numeral{
+    public:
+        Numeral(string numeral){numeral = numeral;}                      //The constructor for the class 'Numeral' is defaulted to a blank string.
+
+        //Public variables
+        string numeral;                             //Used to store the user's chosen roman numeral
+        int running_total=0;                          //Stores the result of the conversion from numeral to integer
+        vector<char> numeral_list;                  //A vector used to store the roman numeral after it is broken down into its characters
+
+        //Public functions
+        void break_string(string numeral){          //This function will break apart the string chosen by the user into characters
+            for(int i=numeral.length(); i>=0; i--){ //and append them to the vector 'numeral_list'.
+                numeral_list.push_back(numeral[i]);
+            }
+        }
+
+        int numeral_to_decimal(string numeral){
+            break_string(numeral);
+            for(int i=1; i<=numeral.length(); i++){
+                if(numeral_list[i] == 'i' || numeral_list[i] == 'I'){
+                    if(numeral_list[i-1] == 'v' || numeral_list[i-1] == 'V'
+                       ||numeral_list[i-1] == 'x' || numeral_list[i-1] == 'X'
+                       ||numeral_list[i-1] == 'l' || numeral_list[i-1] == 'L'
+                       ||numeral_list[i-1] == 'c' || numeral_list[i-1] == 'C'
+                       ||numeral_list[i-1] == 'd' || numeral_list[i-1] == 'D'
+                       ||numeral_list[i-1] == 'm' || numeral_list[i-1] == 'M'){
+                        running_total -= 1;
+                       }
+                    else{
+                        running_total += 1;
+                    }
+                }
+                else if(numeral_list[i] == 'v' || numeral_list[i] == 'V'){
+                    running_total += 5;
+                }
+                else if(numeral_list[i] == 'x' || numeral_list[i] == 'X'){
+                        if(numeral_list[i-1] == 'l' || numeral_list[i-1] == 'L'
+                          || numeral_list[i-1] == 'c' || numeral_list[i-1] == 'C'){
+                            running_total -= 10;
+                        }
+                        else{
+                        running_total += 10;
+                        }
+                }
+                else if(numeral_list[i] == 'l' || numeral_list[i] == 'L'){
+                    running_total += 50;
+                }
+                else if(numeral_list[i] == 'c' || numeral_list[i] == 'C'){
+                        if(numeral_list[i-1] == 'd' || numeral_list[i-1] == 'D'
+                           ||numeral_list[i-1] == 'm' || numeral_list[i-1] == 'M'){
+                           running_total -= 100;
+                        }
+                        else{
+                        running_total += 100;
+                        }
+                }
+                else if(numeral_list[i] == 'd' || numeral_list[i] == 'D'){
+                    running_total += 500;
+                }
+                else if(numeral_list[i] == 'm' || numeral_list[i] == 'M'){
+                    running_total += 1000;
+                }
+                else{
+                    cout << "Invalid character in position " <<i <<". Cannot compute to integer form." <<endl;
+                }
+            }
+            cout << running_total;
+        }
+};
+
+int main()
+{
+    string choice;
+
+    cout << "Please enter a roman numeral: " <<endl;
+    cin >> choice;
+
+    Numeral my_numeral(choice);
+    my_numeral.numeral_to_decimal(choice);
+
+    return 0;
+}
